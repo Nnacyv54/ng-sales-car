@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CarService } from '../../services/car-service.service';
 import { Car } from '../../interfaces/car';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-car',
@@ -19,9 +20,14 @@ export class ListCarComponent implements OnInit {
   textShowPicture: string = 'Mostrar imagen';
   filterText: string = '';
 
-  constructor(private carService: CarService) { }
+  constructor(private carService: CarService,
+    private router: Router) { }
 
   ngOnInit() {
+    this.findAllCars();
+  }
+
+  private findAllCars() {
     this.carService.getListCars().subscribe((resp) => {
       this.cars = resp;
       this.totalPages = Math.ceil(this.cars.length / this.pageSize);
@@ -58,7 +64,7 @@ export class ListCarComponent implements OnInit {
   // Funcion para mostrar la imagen del vehiculo
   showPictureFn() {
     this.showPicture = !this.showPicture;
-    this.textShowPicture = this.showPicture ? 'Ocultar imagen': 'Mostrar imagen';
+    this.textShowPicture = this.showPicture ? 'Ocultar imagen' : 'Mostrar imagen';
   }
 
   // Método para filtrar la lista de coches
@@ -77,7 +83,18 @@ export class ListCarComponent implements OnInit {
     this.currentPage = 1; // Reiniciar a la primera página después de aplicar el filtro
   }
 
-  showDetail(car: any) {
-    console.log(car);
+  showDetail(car: Car) {
+    this.router.navigate(['/new-edit-car', car.codigo]);
+  }
+
+  deleteDetail(car: Car) {
+    this.carService.deleteCarByCode(car.codigo).subscribe((resp: any) => {
+      this.findAllCars();
+      alert(resp.mensaje);
+    });
+  }
+
+  newCar(): void {
+    this.router.navigate(['/new-edit-car', '-1']);
   }
 }

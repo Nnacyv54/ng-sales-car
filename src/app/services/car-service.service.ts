@@ -22,4 +22,22 @@ export class CarService {
       map((resp: any) => resp.data)
     );
   }
+
+  getCarByCode(code: string): Observable<Car> {
+    return this.http.get<Car>(this.baseUrl + '/vehiculo/' + code).pipe(
+      map((resp: any) => resp.data)
+    );
+  }
+
+  deleteCarByCode(code: string): Observable<any> {
+    return this.http.delete<any>(this.baseUrl + '/vehiculo/' + code);
+  }
+
+  updateCar(car: Car, code: string) {
+    return this.http.put<any>(this.baseUrl + '/vehiculo/' + code, car, this.httpOptions);
+  }
+
+  newCar(car: Car) {
+    return this.http.post<any>(this.baseUrl + '/vehiculo/', car, this.httpOptions);
+  }
 }

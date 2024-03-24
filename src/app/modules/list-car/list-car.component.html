@@ -8,8 +8,12 @@
       <label for="filterText" class="col-sm-2 col-form-label">Filtrar por:</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" id="filterText" [(ngModel)]="filterText" (input)="filterCars()"
-          placeholder="Filtrar por código/marca/modelo">
+          placeholder="código/marca/modelo">
       </div>
+    </div>
+
+    <div>
+      <button class="btn btn-secondary" (click)="newCar()">Nuevo</button>
     </div>
 
     <table class="table">
@@ -23,6 +27,7 @@
           <th scope="col">Kil&oacute;metros</th>
           <th scope="col">Precio</th>
           <th scope="col">Calificaci&oacute;n</th>
+          <th scope="col">Opci&oacute;n</th>
         </tr>
       </thead>
       <tbody>
@@ -32,14 +37,16 @@
               <img [src]="car.foto" alt="Imagen del vehiculo" style="width: 100px;" *ngIf="showPicture">
             </div>
           </td>
-          <td><a (click)="showDetail(car)"
-              style="color: cornflowerblue;cursor: pointer;text-decoration: underline;">{{car.codigo}}</a></td>
+          <td>{{car.codigo}}</td>
           <td>{{car.marca}}</td>
           <td>{{car.modelo}}</td>
           <td>{{car.anio}}</td>
           <td>{{car.kilometraje | number:'1.2-2'}}</td>
           <td>{{car.precio | currency:'USD':'symbol':'1.2-2'}}</td>
           <td><span *ngFor="let _ of starsArray(car.calificacion)" class="fa fa-star checked"></span></td>
+          <td><button class="btn btn-info" (click)="showDetail(car)">Ver/Editar</button>
+            <button class="btn btn-danger" (click)="deleteDetail(car)">Eliminar</button>
+          </td>
         </tr>
       </tbody>
     </table>
