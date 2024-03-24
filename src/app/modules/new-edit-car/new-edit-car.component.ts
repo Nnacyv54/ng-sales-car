@@ -85,12 +85,14 @@ export class NewEditCarComponent implements OnInit {
           carToSave.fecha_creacion = new Date();
           this.carService.updateCar(carToSave, this.codigo).subscribe((resp: any) => {
             alert(resp.mensaje);
+            this.router.navigate(['/list-car']);
           });
       } else { // nuevo
         carToSave.usuario_mod = 'nancy vasquez';
         carToSave.fecha_modificacion = new Date();
         this.carService.newCar(carToSave).subscribe((resp: any) => {
           alert(resp.mensaje);
+          this.router.navigate(['/list-car']);
         });
       }
     } else {
