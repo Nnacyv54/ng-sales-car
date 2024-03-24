@@ -1,0 +1,33 @@
+<div class="card" style="width: 100%">
+    <div class="card-header">
+      {{title}}
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Marca</th>
+                <th scope="col">Modelo</th>
+                <th scope="col">A&ntilde;o</th>
+                <th scope="col">Color</th>
+                <th scope="col">Kil&oacute;metros</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Calificaci&oacute;n</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let car of cars">
+                <td></td>
+                <td>{{car.marca}}</td>
+                <td><a (click)="showDetail(car)" style="color: cornflowerblue;cursor: pointer;text-decoration: underline;">{{car.modelo}}</a></td>
+                <td>{{car.anio}}</td>
+                <td>{{car.color}}</td>
+                <td>{{car.kilometros | number:'1.2-2'}}</td>
+                <td>{{car.precio | currency:'USD':'symbol':'1.2-2'}}</td>
+                <td><span *ngFor="let _ of starsArray(car.estrellas)" class="fa fa-star checked"></span></td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+  </div>
