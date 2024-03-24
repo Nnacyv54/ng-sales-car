@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InitComponent } from './modules/init/init.component';
 import { ListCarComponent } from './modules/list-car/list-car.component';
+import { CarService } from './services/car-service.service';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,9 +17,11 @@ import { ListCarComponent } from './modules/list-car/list-car.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule, // modulo para trabajar con apis
+    FormsModule // modulo para trabajar con inputs(formulario)
   ],
-  providers: [],
+  providers: [CarService], // por cada nuevo servicio se agrega a providers
   bootstrap: [AppComponent]
 })
 export class AppModule { }
