@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CarService } from '../../services/car-service.service';
 import { Car } from '../../interfaces/car';
 import { Router } from '@angular/router';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-car',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class ListCarComponent implements OnInit {
 
-  title = 'Lista de autos';
+  title = 'Lista de vehiculos';
   cars: Car[] = [];
   filteredCars: Car[] = []; // array para almacenar los vehiculos filtrados
   pageSize: number = 5; // Cantidad de elementos por página
@@ -32,6 +33,8 @@ export class ListCarComponent implements OnInit {
       this.cars = resp;
       this.totalPages = Math.ceil(this.cars.length / this.pageSize);
       this.filteredCars = [...this.cars];
+    }, err => {
+      swal.fire('Listado', err.error.mensaje, 'error');
     });
   }
 
@@ -90,7 +93,9 @@ export class ListCarComponent implements OnInit {
   deleteDetail(car: Car) {
     this.carService.deleteCarByCode(car.codigo).subscribe((resp: any) => {
       this.findAllCars();
-      alert(resp.mensaje);
+      swal.fire('Borrado', resp.mensaje, 'success');
+    }, err => {
+      swal.fire('Borrado', err.error.mensaje, 'error');
     });
   }
 

@@ -9,6 +9,8 @@ import { CarService } from './services/car-service.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewEditCarComponent } from './modules/new-edit-car/new-edit-car.component';
+import { ClientsComponent } from './modules/clients/clients.component';
+import { ClientService } from './services/client-service';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,7 @@ import { NewEditCarComponent } from './modules/new-edit-car/new-edit-car.compone
     InitComponent,
     ListCarComponent,
     NewEditCarComponent,
+    ClientsComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,7 @@ import { NewEditCarComponent } from './modules/new-edit-car/new-edit-car.compone
     FormsModule, // modulo para trabajar con inputs(formulario)
     ReactiveFormsModule
   ],
-  providers: [CarService], // por cada nuevo servicio se agrega a providers
+  providers: [CarService, ClientService], // por cada nuevo servicio se agrega a providers
   bootstrap: [AppComponent]
 })
 export class AppModule { }

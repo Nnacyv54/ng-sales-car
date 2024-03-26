@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CarService } from '../../services/car-service.service';
 import { Car } from '../../interfaces/car';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-new-edit-car',
@@ -81,22 +82,26 @@ export class NewEditCarComponent implements OnInit {
         usuario_mod: ''
       };
       if (this.codigo && this.codigo !== '-1') { // actualizar
-          carToSave.usuario = 'nancy vasquez';
-          carToSave.fecha_creacion = new Date();
-          this.carService.updateCar(carToSave, this.codigo).subscribe((resp: any) => {
-            alert(resp.mensaje);
-            this.router.navigate(['/list-car']);
-          });
-      } else { // nuevo
         carToSave.usuario_mod = 'nancy vasquez';
         carToSave.fecha_modificacion = new Date();
-        this.carService.newCar(carToSave).subscribe((resp: any) => {
-          alert(resp.mensaje);
+        this.carService.updateCar(carToSave, this.codigo).subscribe((resp: any) => {
+          swal.fire('Actualización', resp.mensaje, 'success');
           this.router.navigate(['/list-car']);
+        }, err => {
+          swal.fire('Actualización', err.error.mensaje, 'error');
+        });
+      } else { // nuevo
+        carToSave.usuario = 'nancy vasquez';
+        carToSave.fecha_creacion = new Date();
+        this.carService.newCar(carToSave).subscribe((resp: any) => {
+          swal.fire('Registro', resp.mensaje, 'success');
+          this.router.navigate(['/list-car']);
+        }, err => {
+          swal.fire('Registro', err.error.mensaje, 'error');
         });
       }
     } else {
-      alert('Revise los campos por favor.')
+      swal.fire('Error', 'Revise los campos', 'error');
     }
   }
 
